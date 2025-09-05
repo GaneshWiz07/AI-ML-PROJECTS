@@ -22,7 +22,7 @@ This Flask-based web application uses a trained machine learning model to predic
 ## 🛠️ Technology Stack
 
 - **Backend**: Python, Flask
-- **Frontend**: HTML5, CSS3, JavaScript
+- **Frontend**: HTML5, CSS3
 - **Machine Learning**: scikit-learn, NumPy
 - **Data**: Pandas for data handling
 - **Styling**: Modern CSS with gradients and animations
