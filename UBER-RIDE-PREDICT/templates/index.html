@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uber Ride Predictor</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Uber Ride Demand Predictor</h1>
+        <p class="subtitle">Predict weekly ridership based on market conditions</p>
+        
+        <form action="/predict" method="POST" class="prediction-form">
+            <div class="form-group">
+                <label for="price">Price per Week ($)</label>
+                <input type="number" id="price" name="price" placeholder="e.g., 15" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="population">Population</label>
+                <input type="number" id="population" name="population" placeholder="e.g., 1800000" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="income">Monthly Income ($)</label>
+                <input type="number" id="income" name="income" placeholder="e.g., 5800" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="parking">Average Parking Cost per Month ($)</label>
+                <input type="number" id="parking" name="parking" placeholder="e.g., 50" required>
+            </div>
+            
+            <button type="submit" class="predict-btn">Predict Weekly Riders</button>
+        </form>
+        
+        {% if prediction_text %}
+        <div class="result {% if new_prediction %}pulse{% endif %}">
+            <h2>📊 Latest Prediction</h2>
+            <p class="prediction-output">{{ prediction_text }}</p>
+            <div class="prediction-details">
+                <small>Predicted on: {{ last_prediction.timestamp }}</small>
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if last_prediction.result and not prediction_text %}
+        <div class="last-prediction">
+            <h3>🕒 Last Prediction</h3>
+            <div class="prediction-summary">
+                <div class="result-number">{{ last_prediction.result }}</div>
+                <div class="result-label">Weekly Riders</div>
+            </div>
+            <div class="prediction-inputs">
+                <div class="input-item">
+                    <span class="input-label">Price:</span>
+                    <span class="input-value">${{ last_prediction.inputs.price }}</span>
+                </div>
+                <div class="input-item">
+                    <span class="input-label">Population:</span>
+                    <span class="input-value">{{ "{:,}".format(last_prediction.inputs.population) }}</span>
+                </div>
+                <div class="input-item">
+                    <span class="input-label">Income:</span>
+                    <span class="input-value">${{ last_prediction.inputs.income }}</span>
+                </div>
+                <div class="input-item">
+                    <span class="input-label">Parking:</span>
+                    <span class="input-value">${{ last_prediction.inputs.parking }}</span>
+                </div>
+            </div>
+            <div class="timestamp">
+                <small>{{ last_prediction.timestamp }}</small>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="info">
+            <h3>How it works:</h3>
+            <ul>
+                <li>Enter the market conditions for your area</li>
+                <li>Our ML model analyzes the data</li>
+                <li>Get predicted weekly ridership numbers</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
