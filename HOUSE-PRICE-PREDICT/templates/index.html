@@ -3,74 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>House Price Predictor</title>
+    <title>House Price Predictor - AI Powered Estimates</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
     <div class="header">
-        <h1>🏠 House Price Prediction System</h1>
-        <p>Machine Learning Powered Price Estimates</p>
+        <div class="header-content">
+            <div class="header-icon">🏠</div>
+            <h1>House Price Prediction</h1>
+            <p class="subtitle">AI-Powered Real Estate Valuation</p>
+            <div class="header-badge">
+                <span class="badge-icon">🤖</span>
+                <span>Machine Learning Model</span>
+            </div>
+        </div>
     </div>
 
     <div class="content">
-        <div class="form-section">
-            <h2>Enter Property Details</h2>
+        <div class="form-section glass-card">
+            <div class="section-header">
+                <h2>Property Details</h2>
+                <p class="section-subtitle">Enter information to get instant price estimate</p>
+            </div>
             <form action="/predict" method="POST" class="prediction-form">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label>Bedrooms</label>
-                        <input type="number" name="bedrooms" placeholder="e.g., 3" required min="1">
+                        <label>
+                            <span class="label-icon">🛏️</span>
+                            <span class="label-text">Bedrooms</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" name="bedrooms" placeholder="3" required min="1">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label>Bathrooms</label>
-                        <input type="number" name="bathrooms" placeholder="e.g., 2.5" required min="1" step="0.5">
+                        <label>
+                            <span class="label-icon">🚿</span>
+                            <span class="label-text">Bathrooms</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" name="bathrooms" placeholder="2.5" required min="1" step="0.5">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label>Square Footage</label>
-                        <input type="number" name="sqft" placeholder="e.g., 2000" required min="1">
+                        <label>
+                            <span class="label-icon">📏</span>
+                            <span class="label-text">Square Footage</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" name="sqft" placeholder="2000" required min="1">
+                            <span class="input-suffix">sq ft</span>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label>Zipcode</label>
-                        <input type="number" name="zipcode" placeholder="e.g., 94102" required min="10000" max="99999">
+                        <label>
+                            <span class="label-icon">📍</span>
+                            <span class="label-text">Zipcode</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" name="zipcode" placeholder="94102" required min="10000" max="99999">
+                        </div>
                     </div>
                 </div>
-                <button type="submit" class="button">Predict House Price</button>
+                <button type="submit" class="button">
+                    <span class="button-icon">✨</span>
+                    <span>Predict House Price</span>
+                    <span class="button-arrow">→</span>
+                </button>
             </form>
         </div>
 
         {% if prediction_text %}
-        <div class="result-section">
-            <h2>Estimated House Price</h2>
-            <div class="price-large {% if new_prediction %}pulse{% endif %}">
-                ${{ '{:,}'.format(last_prediction.result) }}
+        <div class="result-section glass-card {% if new_prediction %}fade-in{% endif %}">
+            <div class="result-header">
+                <div class="result-badge">
+                    <span class="badge-pulse"></span>
+                    <span>Prediction Complete</span>
+                </div>
+                <h2>Estimated Value</h2>
+            </div>
+            <div class="price-container">
+                <div class="price-label">Predicted Price</div>
+                <div class="price-large {% if new_prediction %}pulse{% endif %}">
+                    ${{ '{:,}'.format(last_prediction.result) }}
+                </div>
+                <div class="price-confidence">
+                    <span class="confidence-bar">
+                        <span class="confidence-fill"></span>
+                    </span>
+                    <span class="confidence-text">High Confidence Estimate</span>
+                </div>
             </div>
 
             {% if last_prediction.result %}
             <div class="details">
                 <div class="detail-box">
-                    <div class="detail-label">Bedrooms</div>
-                    <div class="detail-value">{{ last_prediction.inputs.bedrooms }}</div>
+                    <div class="detail-icon">🛏️</div>
+                    <div class="detail-content">
+                        <div class="detail-label">Bedrooms</div>
+                        <div class="detail-value">{{ last_prediction.inputs.bedrooms }}</div>
+                    </div>
                 </div>
                 <div class="detail-box">
-                    <div class="detail-label">Bathrooms</div>
-                    <div class="detail-value">{{ last_prediction.inputs.bathrooms }}</div>
+                    <div class="detail-icon">🚿</div>
+                    <div class="detail-content">
+                        <div class="detail-label">Bathrooms</div>
+                        <div class="detail-value">{{ last_prediction.inputs.bathrooms }}</div>
+                    </div>
                 </div>
                 <div class="detail-box">
-                    <div class="detail-label">Square Feet</div>
-                    <div class="detail-value">{{ '{:,}'.format(last_prediction.inputs.sqft) }}</div>
+                    <div class="detail-icon">📏</div>
+                    <div class="detail-content">
+                        <div class="detail-label">Square Feet</div>
+                        <div class="detail-value">{{ '{:,}'.format(last_prediction.inputs.sqft) }}</div>
+                    </div>
                 </div>
                 <div class="detail-box">
-                    <div class="detail-label">Zipcode</div>
-                    <div class="detail-value">{{ last_prediction.inputs.zipcode }}</div>
+                    <div class="detail-icon">📍</div>
+                    <div class="detail-content">
+                        <div class="detail-label">Zipcode</div>
+                        <div class="detail-value">{{ last_prediction.inputs.zipcode }}</div>
+                    </div>
                 </div>
             </div>
 
-            <div style="margin-top: 20px; font-size: 12px; color: #666; text-align: center;">
-                {{ last_prediction.timestamp }}
+            <div class="timestamp">
+                <span class="timestamp-icon">🕐</span>
+                <span>{{ last_prediction.timestamp }}</span>
             </div>
             {% endif %}
         </div>
         {% endif %}
     </div>
+
+    <footer class="footer">
+        <p>Powered by RandomForest Machine Learning Algorithm</p>
+    </footer>
 </body>
 </html>
