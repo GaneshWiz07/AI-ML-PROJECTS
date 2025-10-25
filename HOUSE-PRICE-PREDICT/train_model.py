@@ -18,7 +18,7 @@ square_footage = np.random.randint(600, 6001, n_samples)
 zipcode = np.random.randint(10000, 100000, n_samples)
 
 # Define high-value zipcodes (20-40% premium)
-high_value_zipcodes = [94102, 90210, 10001, 33139, 94301, 02108, 98101, 60614, 78701, 80202, 19103, 33109, 77002, 30308, 20001]
+high_value_zipcodes = [94102, 90210, 10001, 33139, 94301, 98101, 60614, 78701, 80202, 19103, 33109, 77002, 30308, 20001]
 
 # Generate realistic prices
 prices = []
