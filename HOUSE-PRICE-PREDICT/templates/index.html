@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h1>🏠 House Price Prediction System</h1>
+        <p>Machine Learning Powered Price Estimates</p>
+    </div>
+
+    <div class="content">
+        <div class="form-section">
+            <h2>Enter Property Details</h2>
+            <form action="/predict" method="POST" class="prediction-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Bedrooms</label>
+                        <input type="number" name="bedrooms" placeholder="e.g., 3" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Bathrooms</label>
+                        <input type="number" name="bathrooms" placeholder="e.g., 2.5" required min="1" step="0.5">
+                    </div>
+                    <div class="form-group">
+                        <label>Square Footage</label>
+                        <input type="number" name="sqft" placeholder="e.g., 2000" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Zipcode</label>
+                        <input type="number" name="zipcode" placeholder="e.g., 94102" required min="10000" max="99999">
+                    </div>
+                </div>
+                <button type="submit" class="button">Predict House Price</button>
+            </form>
+        </div>
+
+        {% if prediction_text %}
+        <div class="result-section">
+            <h2>Estimated House Price</h2>
+            <div class="price-large {% if new_prediction %}pulse{% endif %}">
+                ${{ '{:,}'.format(last_prediction.result) }}
+            </div>
+
+            {% if last_prediction.result %}
+            <div class="details">
+                <div class="detail-box">
+                    <div class="detail-label">Bedrooms</div>
+                    <div class="detail-value">{{ last_prediction.inputs.bedrooms }}</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Bathrooms</div>
+                    <div class="detail-value">{{ last_prediction.inputs.bathrooms }}</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Square Feet</div>
+                    <div class="detail-value">{{ '{:,}'.format(last_prediction.inputs.sqft) }}</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Zipcode</div>
+                    <div class="detail-value">{{ last_prediction.inputs.zipcode }}</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; font-size: 12px; color: #666; text-align: center;">
+                {{ last_prediction.timestamp }}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
